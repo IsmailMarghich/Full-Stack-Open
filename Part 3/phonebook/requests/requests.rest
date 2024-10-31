@@ -1,0 +1,18 @@
+GET http://localhost:3001/api/persons
+###
+GET http://localhost:3001/info
+###
+GET http://localhost:3001/api/persons/1
+###
+DELETE http://localhost:3001/api/persons/1
+###
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Bob sherlock",
+    "number": "112"
+}
+###
+GET http://localhost:3001/lol
+###
