@@ -1,6 +1,10 @@
 const express = require("express");
-const app = express();
+const cors = require("cors");
 var morgan = require("morgan");
+const app = express();
+app.use(express.static('dist'))
+
+app.use(cors());
 morgan.token("body", (request, response) => {
   return JSON.stringify(request.body);
 });
@@ -16,7 +20,6 @@ const requestLogger = (request, response, next) => {
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: "unknown endpoint" });
 };
-
 app.use(express.json());
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms :body")
@@ -62,7 +65,6 @@ app.get("/api/persons/:id", (request, response) => {
 
 app.post("/api/persons", (request, response) => {
   const body = request.body;
-  console.log(body);
 
   if (!body.number) {
     return response.status(400).json({ error: "number is missing" });
@@ -100,7 +102,7 @@ app.get("/info", (request, response) => {
 
 app.use(unknownEndpoint);
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
