@@ -1,14 +1,26 @@
 const express = require("express");
 const cors = require("cors");
 var morgan = require("morgan");
+require("dotenv").config();
+
 const app = express();
-app.use(express.static('dist'))
+const Phonenumber = require("./models/phonenumber");
+
+app.use(express.static("dist"));
 
 app.use(cors());
 morgan.token("body", (request, response) => {
   return JSON.stringify(request.body);
 });
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message);
 
+  if (error.name === "CastError") {
+    return response.status(400).send({ error: "malformatted id" });
+  }
+
+  next(error);
+};
 const requestLogger = (request, response, next) => {
   console.log("Method:", request.method);
   console.log("Path:  ", request.path);
@@ -26,41 +38,22 @@ app.use(
 );
 app.use(requestLogger);
 
-let persons = [
-  {
-    id: "1",
-    name: "Arto Hellas",
-    number: "040-123456",
-  },
-  {
-    id: "2",
-    name: "Ada Lovelace",
-    number: "39-44-5323523",
-  },
-  {
-    id: "3",
-    name: "Dan Abramov",
-    number: "12-43-234345",
-  },
-  {
-    id: "4",
-    name: "Mary Poppendieck",
-    number: "39-23-6423122",
-  },
-];
-
-app.get("/", (request, response) => {
-  response.send("<h1>Hello World!</h1>");
-});
-
 app.get("/api/persons", (request, response) => {
-  response.json(persons);
+  Phonenumber.find({}).then((phonenumber) => {
+    response.json(phonenumber);
+  });
 });
 
-app.get("/api/persons/:id", (request, response) => {
-  const id = request.params.id;
-  const person = persons.find((person) => person.id === id);
-  response.json(person);
+app.get("/api/persons/:id", (request, response, next) => {
+  Phonenumber.findById(request.params.id)
+    .then((phonenumber) => {
+      if (phonenumber) {
+        response.json(phonenumber);
+      } else {
+        response.status(404).end();
+      }
+    })
+    .catch((error) => next(error));
 });
 
 app.post("/api/persons", (request, response) => {
@@ -72,35 +65,52 @@ app.post("/api/persons", (request, response) => {
   if (!body.name) {
     return response.status(400).json({ error: "name is missing" });
   }
-  if (persons.find((person) => person.name === body.name)) {
-    return response.status(400).json({ error: "name must be unique" });
-  }
+  // if (persons.find((person) => person.name === body.name)) {
+  //   return response.status(400).json({ error: "name must be unique" });
+  // }
 
-  const id = Math.floor(Math.random() * 10000);
-  const person = {
-    id: String(id),
+  const phonenumber = new Phonenumber({
     name: body.name,
     number: body.number,
+  });
+  phonenumber.save().then((savedPhonenumber) => {
+    response.json(savedPhonenumber);
+  });
+});
+
+app.delete("/api/persons/:id", (request, response, next) => {
+  Phonenumber.findByIdAndDelete(request.params.id)
+    .then((result) => {
+      response.status(204).end();
+    })
+    .catch((error) => next(error));
+});
+
+app.put("/api/persons/:id", (request, response, next) => {
+  const phonenumber = {
+    name: request.body.name,
+    number: request.body.number,
   };
-  persons = persons.concat(person);
-  response.json(person);
+
+  Phonenumber.findByIdAndUpdate(request.params.id, phonenumber, { new: true })
+    .then((updatedPhoneNumber) => {
+      response.json(updatedPhoneNumber);
+    })
+    .catch((error) => next(error));
 });
 
-app.delete("/api/persons/:id", (request, response) => {
-  const id = request.params.id;
-  persons = persons.filter((person) => person.id !== id);
-  response.status(204).end();
-});
-
-app.get("/info", (request, response) => {
-  response.send(
-    `<p>Phone has info for ${
-      persons.length
-    } people</p> <p>${Date().toString()}</p>`
-  );
+app.get("/info", (request, response, next) => {
+  Phonenumber.countDocuments({})
+    .then((count) => {
+      response.send(
+        `<p>Phonebook has info for ${count} people</p> <p>${new Date().toString()}</p>`
+      );
+    })
+    .catch((error) => next(error));
 });
 
 app.use(unknownEndpoint);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
