@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const Note = require("./models/note");
-const mongoose = require("mongoose");
 
 const app = express();
 const errorHandler = (error, request, response, next) => {
