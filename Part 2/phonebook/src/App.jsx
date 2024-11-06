@@ -56,10 +56,21 @@ const App = () => {
             }, 3000);
           })
           .catch((error) => {
-            setNotificationMessage(`Information of ${newName} has already been removed from the server`);
-            setTimeout(() => {
-              setNotificationMessage(null);
-            }, 3000)
+            console.log(error.response.data.error);
+
+            if (error.response.data.error.includes("Validation failed")) {
+              setNotificationMessage(error.response.data.error);
+              setTimeout(() => {
+                setNotificationMessage(null);
+              }, 3000);
+            } else {
+              setNotificationMessage(
+                `Information of ${newName} has already been removed from the server`
+              );
+              setTimeout(() => {
+                setNotificationMessage(null);
+              }, 3000);
+            }
           });
       }
       return;
@@ -68,15 +79,23 @@ const App = () => {
       name: newName,
       number: newNumber,
     };
-    personService.create(personObject).then((returnedPerson) => {
-      setPersons(persons.concat(returnedPerson));
-      setNewName("");
-      setNewNumber("");
-      setNotificationMessage(`Added ${returnedPerson.name}`);
-      setTimeout(() => {
-        setNotificationMessage(null);
-      }, 3000);
-    });
+    personService
+      .create(personObject)
+      .then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName("");
+        setNewNumber("");
+        setNotificationMessage(`Added ${returnedPerson.name}`);
+        setTimeout(() => {
+          setNotificationMessage(null);
+        }, 3000);
+      })
+      .catch((error) => {
+        setNotificationMessage(error.response.data.error);
+        setTimeout(() => {
+          setNotificationMessage(null);
+        }, 3000);
+      });
   };
   const deletePerson = (id) => {
     const person = persons.find((person) => person.id === id);

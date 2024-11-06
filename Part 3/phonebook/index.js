@@ -17,6 +17,8 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === "CastError") {
     return response.status(400).send({ error: "malformatted id" });
+  } else if (error.name === "ValidationError") {
+    return response.status(400).json({ error: error.message });
   }
 
   next(error);
@@ -45,18 +47,16 @@ app.get("/api/persons", (request, response) => {
 });
 
 app.get("/api/persons/:id", (request, response, next) => {
-  Phonenumber.findById(request.params.id)
-    .then((phonenumber) => {
-      if (phonenumber) {
-        response.json(phonenumber);
-      } else {
-        response.status(404).end();
-      }
-    })
-    .catch((error) => next(error));
+  Phonenumber.findById(request.params.id).then((phonenumber) => {
+    if (phonenumber) {
+      response.json(phonenumber);
+    } else {
+      response.status(404).end();
+    }
+  });
 });
 
-app.post("/api/persons", (request, response) => {
+app.post("/api/persons", (request, response, next) => {
   const body = request.body;
 
   if (!body.number) {
@@ -73,9 +73,12 @@ app.post("/api/persons", (request, response) => {
     name: body.name,
     number: body.number,
   });
-  phonenumber.save().then((savedPhonenumber) => {
-    response.json(savedPhonenumber);
-  });
+  phonenumber
+    .save()
+    .then((savedPhonenumber) => {
+      response.json(savedPhonenumber);
+    })
+    .catch((error) => next(error));
 });
 
 app.delete("/api/persons/:id", (request, response, next) => {
@@ -92,7 +95,10 @@ app.put("/api/persons/:id", (request, response, next) => {
     number: request.body.number,
   };
 
-  Phonenumber.findByIdAndUpdate(request.params.id, phonenumber, { new: true })
+  Phonenumber.findByIdAndUpdate(request.params.id, phonenumber, {
+    new: true,
+    runValidators: true,
+  })
     .then((updatedPhoneNumber) => {
       response.json(updatedPhoneNumber);
     })
