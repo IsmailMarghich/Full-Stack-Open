@@ -88,6 +88,29 @@ test('Return 400 when posting blog without url', async () => {
   assert.strictEqual(blogs.length, initialBlogs.length)
 }
 )
+test('Delete a blog post', async() => {
+  const initialResponse = await api.get('/api/blogs')
+  const deleteId = initialResponse.body[0].id
+  await api.delete(`/api/blogs/${deleteId}`)
+  const response = await api.get('/api/blogs')
+  const blogs = response.body
+  assert.strictEqual(blogs.length, initialBlogs.length - 1)
+})
+test('Update a blog post', async() => {
+  const initialResponse = await api.get('/api/blogs')
+  const updateId = initialResponse.body[0].id
+  const updatedBlog = {
+    title: 'Go To Statement Considered Harmful',
+    author: 'Edsger W. Dijkstra',
+    url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
+    likes: 6
+  }
+  await api.put(`/api/blogs/${updateId}`).send(updatedBlog)
+
+  const response = await api.get('/api/blogs')
+  const blogs = response.body
+  assert.strictEqual(blogs[0].likes, updatedBlog.likes)
+})
 after(async () => {
   await mongoose.connection.close()
 })

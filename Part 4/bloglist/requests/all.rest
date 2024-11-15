@@ -9,3 +9,16 @@ Content-Type: application/json
   "url": "google.com",
   "likes": 5
 }
+###
+DELETE http://localhost:3001/api/blogs/672d37e243bf532b6dba0a6f
+
+###
+PUT http://localhost:3001/api/blogs/672d3af02b79139bb492e248
+Content-Type: application/json
+
+{
+  "title": "On the meaning of programming",
+  "author": "Ismail",
+  "url": "google.com",
+  "likes": 6
+}
