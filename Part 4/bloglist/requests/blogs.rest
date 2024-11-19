@@ -7,7 +7,8 @@ Content-Type: application/json
   "title": "On the meaning of programming",
   "author": "Ismail",
   "url": "google.com",
-  "likes": 5
+  "likes": 5,
+  "userId": "673d19ab5c287505a949d069"
 }
 ###
 DELETE http://localhost:3001/api/blogs/672d37e243bf532b6dba0a6f
