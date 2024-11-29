@@ -2,6 +2,7 @@ GET http://localhost:3001/api/blogs
 ###
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVrYWkiLCJpZCI6IjY3M2QxOWFkNWMyODc1MDVhOTQ5ZDA2YiIsImlhdCI6MTczMjkyMjQyNSwiZXhwIjoxNzMyOTI2MDI1fQ.hXmSvphw-ljWJ_9YOyja-eimY6f9CVCUX6Zdo1EMwgM
 
 {
   "title": "On the meaning of programming",
@@ -11,7 +12,9 @@ Content-Type: application/json
   "userId": "673d19ab5c287505a949d069"
 }
 ###
-DELETE http://localhost:3001/api/blogs/672d37e243bf532b6dba0a6f
+
+DELETE http://localhost:3001/api/blogs/674a50cc90b5f7cbda5162da
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVrYWkiLCJpZCI6IjY3M2QxOWFkNWMyODc1MDVhOTQ5ZDA2YiIsImlhdCI6MTczMjkyMjQyNSwiZXhwIjoxNzMyOTI2MDI1fQ.hXmSvphw-ljWJ_9YOyja-eimY6f9CVCUX6Zdo1EMwgM
 
 ###
 PUT http://localhost:3001/api/blogs/672d3af02b79139bb492e248
