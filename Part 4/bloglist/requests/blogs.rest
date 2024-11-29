@@ -2,19 +2,19 @@ GET http://localhost:3001/api/blogs
 ###
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVrYWkiLCJpZCI6IjY3M2QxOWFkNWMyODc1MDVhOTQ5ZDA2YiIsImlhdCI6MTczMjkyMjQyNSwiZXhwIjoxNzMyOTI2MDI1fQ.hXmSvphw-ljWJ_9YOyja-eimY6f9CVCUX6Zdo1EMwgM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVrYWkiLCJpZCI6IjY3NGE1MzE5YzJiNTk0YzY4YzcyMWZkZSIsImlhdCI6MTczMjkyNDI0MSwiZXhwIjoxNzMyOTI3ODQxfQ.kDNCz50Jen_GhPpylQWfWn9_4rgMBAzHLNCcqZ7mgV0
 
 {
   "title": "On the meaning of programming",
   "author": "Ismail",
   "url": "google.com",
   "likes": 5,
-  "userId": "673d19ab5c287505a949d069"
+  "userId": "674a5319c2b594c68c721fde"
 }
 ###
 
-DELETE http://localhost:3001/api/blogs/674a50cc90b5f7cbda5162da
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVrYWkiLCJpZCI6IjY3M2QxOWFkNWMyODc1MDVhOTQ5ZDA2YiIsImlhdCI6MTczMjkyMjQyNSwiZXhwIjoxNzMyOTI2MDI1fQ.hXmSvphw-ljWJ_9YOyja-eimY6f9CVCUX6Zdo1EMwgM
+DELETE http://localhost:3001/api/blogs/674a5362c2b594c68c721feb
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVrYWkiLCJpZCI6IjY3NGE1MzE5YzJiNTk0YzY4YzcyMWZkZSIsImlhdCI6MTczMjkyNDI0MSwiZXhwIjoxNzMyOTI3ODQxfQ.kDNCz50Jen_GhPpylQWfWn9_4rgMBAzHLNCcqZ7mgV0
 
 ###
 PUT http://localhost:3001/api/blogs/672d3af02b79139bb492e248
