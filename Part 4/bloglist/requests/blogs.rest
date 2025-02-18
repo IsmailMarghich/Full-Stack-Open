@@ -2,7 +2,7 @@ GET http://localhost:3001/api/blogs
 ###
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVrYWkiLCJpZCI6IjY3NGE1MzE5YzJiNTk0YzY4YzcyMWZkZSIsImlhdCI6MTczMjkyNDI0MSwiZXhwIjoxNzMyOTI3ODQxfQ.kDNCz50Jen_GhPpylQWfWn9_4rgMBAzHLNCcqZ7mgV0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVrYWkiLCJpZCI6IjY3NGE1MzE5YzJiNTk0YzY4YzcyMWZkZSIsImlhdCI6MTczOTkwNjkxNywiZXhwIjoxNzM5OTEwNTE3fQ.lzK-4DHY900xfVDjNaq3ZXUjin_nXsAaNlzH4oFUtfg
 
 {
   "title": "On the meaning of programming",
@@ -13,8 +13,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sd
 }
 ###
 
-DELETE http://localhost:3001/api/blogs/674a5362c2b594c68c721feb
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVrYWkiLCJpZCI6IjY3NGE1MzE5YzJiNTk0YzY4YzcyMWZkZSIsImlhdCI6MTczMjkyNDI0MSwiZXhwIjoxNzMyOTI3ODQxfQ.kDNCz50Jen_GhPpylQWfWn9_4rgMBAzHLNCcqZ7mgV0
+DELETE http://localhost:3001/api/blogs/67b4df9ef2ed9f55243cf2d3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVrYWkiLCJpZCI6IjY3NGE1MzE5YzJiNTk0YzY4YzcyMWZkZSIsImlhdCI6MTczOTkwNjkxNywiZXhwIjoxNzM5OTEwNTE3fQ.lzK-4DHY900xfVDjNaq3ZXUjin_nXsAaNlzH4oFUtfg
 
 ###
 PUT http://localhost:3001/api/blogs/672d3af02b79139bb492e248
